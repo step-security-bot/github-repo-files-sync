@@ -1,0 +1,85 @@
+name: Repo Settings Sync
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+#  schedule:
+#    - cron: 0 0 * * *
+
+jobs:
+  repo_setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Repo Settings - public
+        uses: kbrashears5/github-action-repo-settings-sync@2.0
+        with:
+          REPOSITORIES: |
+            ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
+            ChrisCarini/environment-variable-settings-summary-intellij-plugin
+            ChrisCarini/example-loc-plugin-config-plugin
+            ChrisCarini/git-push-reminder-jetbrains-plugin
+            ChrisCarini/ieee-csdl-downloader
+            ChrisCarini/intellij-code-exfiltration
+            ChrisCarini/intellij-notification-sample
+            ChrisCarini/iris-jetbrains-plugin
+            ChrisCarini/jetbrains-auto-power-saver
+            ChrisCarini/jetbrains-ide-release-dates
+            ChrisCarini/loc-change-count-detector-jetbrains-plugin
+            ChrisCarini/logshipper-intellij-plugin
+            ChrisCarini/sample-intellij-plugin
+            ChrisCarini/shodan-exposure-box
+            ChrisCarini/trivia-box
+            ChrisCarini/upptime
+          ALLOW_WIKI: 'true'
+          ALLOW_ISSUES: 'true'
+          ALLOW_PROJECTS: 'true'
+
+          MERGE_COMMIT: 'false'
+          SQUASH_MERGE: 'true'
+          REBASE_MERGE: 'false'
+
+          AUTO_MERGE: 'true'
+
+          DELETE_HEAD: 'true'
+
+          # NOTE: The below is marked `UNCHANGED` and the remainder are commented because otherwise
+          # running this action will end up 'un-setting' the 'required status checks'. :(
+          BRANCH_PROTECTION_ENABLED: 'UNCHANGED'
+          #          BRANCH_PROTECTION_NAME: 'main'
+          #          BRANCH_PROTECTION_REQUIRED_REVIEWERS: '0'
+          #          BRANCH_PROTECTION_DISMISS: 'true'
+          #          BRANCH_PROTECTION_CODE_OWNERS: 'false'
+          #          BRANCH_PROTECTION_ENFORCE_ADMINS: 'false'
+          TOKEN: ${{ secrets.GH_PAT_REPO_SCOPE }}
+
+      - name: Sync Repo Settings - private
+        uses: kbrashears5/github-action-repo-settings-sync@2.0
+        with:
+          REPOSITORIES: |
+            ChrisCarini/fitbit-data-extract
+            ChrisCarini/jetbrains-sdk-cleaner
+          ALLOW_WIKI: 'false' # This option is only available for public repos :(
+          ALLOW_ISSUES: 'true'
+          ALLOW_PROJECTS: 'true'
+
+          MERGE_COMMIT: 'false'
+          SQUASH_MERGE: 'true'
+          REBASE_MERGE: 'false'
+
+          AUTO_MERGE: 'false' # This option is only available for public repos :(
+
+          DELETE_HEAD: 'true'
+
+          # NOTE: The below is marked `UNCHANGED` and the remainder are commented because otherwise
+          # running this action will end up 'un-setting' the 'required status checks'. :(
+          BRANCH_PROTECTION_ENABLED: 'UNCHANGED'
+          #          BRANCH_PROTECTION_NAME: 'main'
+          #          BRANCH_PROTECTION_REQUIRED_REVIEWERS: '0'
+          #          BRANCH_PROTECTION_DISMISS: 'true'
+          #          BRANCH_PROTECTION_CODE_OWNERS: 'false'
+          #          BRANCH_PROTECTION_ENFORCE_ADMINS: 'false'
+          TOKEN: ${{ secrets.GH_PAT_REPO_SCOPE }}

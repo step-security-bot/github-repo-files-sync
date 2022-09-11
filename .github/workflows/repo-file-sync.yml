@@ -1,4 +1,4 @@
-name: Sync Files
+name: Repo Files Sync
 on:
   push:
     branches:
@@ -17,9 +17,15 @@ jobs:
         uses: BetaHuhn/repo-file-sync-action@v1
         with:
           ASSIGNEES: |
-            Chris Carini
-          REVIEWERS: |
             ChrisCarini
+          # NOTE: As much as I would like to be marked to review each of these, because
+          # this GitHub Action uses a PAT, the commit is coming from myself (ie, `ChrisCarini`)
+          # and thus, trying to set myself as a reviewer yields the below error message:
+          #
+          #   "Error: Review cannot be requested from pull request author."
+          #
+          # REVIEWERS: |
+          #   ChrisCarini
           PR_LABELS: |
             repo-file-sync
           CONFIG_PATH: sync.yml
