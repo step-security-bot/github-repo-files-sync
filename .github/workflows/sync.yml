@@ -16,5 +16,11 @@ jobs:
       - name: Run Repo File Sync Action
         uses: BetaHuhn/repo-file-sync-action@v1
         with:
-          GH_PAT: ${{ secrets.GH_PAT_REPO_SCOPE }}
+          ASSIGNEES: |
+            Chris Carini
+          REVIEWERS: |
+            ChrisCarini
+          PR_LABELS: |
+            repo-file-sync
           CONFIG_PATH: sync.yml
+          GH_PAT: ${{ secrets.GH_PAT_REPO_SCOPE }}
