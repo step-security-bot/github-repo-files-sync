@@ -22,6 +22,7 @@ jobs:
             ChrisCarini/environment-variable-settings-summary-intellij-plugin
             ChrisCarini/example-loc-plugin-config-plugin
             ChrisCarini/git-push-reminder-jetbrains-plugin
+            ChrisCarini/github-repo-files-sync
             ChrisCarini/ieee-csdl-downloader
             ChrisCarini/intellij-code-exfiltration
             ChrisCarini/intellij-notification-sample
