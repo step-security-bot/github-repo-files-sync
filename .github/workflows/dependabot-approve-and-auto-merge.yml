@@ -1,0 +1,83 @@
+name: Dependabot Pull Request Approve and Merge
+
+# Taken from a mix of the below resources:
+#   - https://blog.somewhatabstract.com/2021/10/11/setting-up-dependabot-with-github-actions-to-approve-and-merge/
+#   - https://github.com/dependabot/fetch-metadata#auto-approving
+#   - https://github.com/dependabot/fetch-metadata#enabling-auto-merge
+
+on: pull_request_target
+
+permissions:
+  contents: write       # Required for auto-merge
+  pull-requests: write  # Required for auto-merge + auto-approving
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+
+    # Checking the author will prevent your Action run failing on non-Dependabot PRs
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    steps:
+
+      # This first step will fail if there's no metadata and so subsequent actions will not occur.
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.1.1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      # Informational: Print all Dependabot Metadata
+      - name: Print All Dependabot Metadata
+        run: |
+          echo "steps.dependabot-metadata.outputs.dependency-names:          ${STEPS__DEPENDABOT_METADATA__OUTPUTS__DEPENDENCY_NAMES}"
+          echo "steps.dependabot-metadata.outputs.dependency-type:           ${STEPS__DEPENDABOT_METADATA__OUTPUTS__DEPENDENCY_TYPE}"
+          echo "steps.dependabot-metadata.outputs.update-type:               ${STEPS__DEPENDABOT_METADATA__OUTPUTS__UPDATE_TYPE}"
+          echo "steps.dependabot-metadata.outputs.updated-dependencies-json: ${STEPS__DEPENDABOT_METADATA__OUTPUTS__UPDATED_DEPENDENCIES_JSON}"
+          echo "steps.dependabot-metadata.outputs.directory:                 ${STEPS__DEPENDABOT_METADATA__OUTPUTS__DIRECTORY}"
+          echo "steps.dependabot-metadata.outputs.package-ecosystem:         ${STEPS__DEPENDABOT_METADATA__OUTPUTS__PACKAGE_ECOSYSTEM}"
+          echo "steps.dependabot-metadata.outputs.target-branch:             ${STEPS__DEPENDABOT_METADATA__OUTPUTS__TARGET_BRANCH}"
+          echo "steps.dependabot-metadata.outputs.previous-version:          ${STEPS__DEPENDABOT_METADATA__OUTPUTS__PREVIOUS_VERSION}"
+          echo "steps.dependabot-metadata.outputs.new-version:               ${STEPS__DEPENDABOT_METADATA__OUTPUTS__NEW_VERSION}"
+          echo "steps.dependabot-metadata.outputs.alert-state:               ${STEPS__DEPENDABOT_METADATA__OUTPUTS__ALERT_STATE}"
+          echo "steps.dependabot-metadata.outputs.ghsa-id:                   ${STEPS__DEPENDABOT_METADATA__OUTPUTS__GHSA_ID}"
+          echo "steps.dependabot-metadata.outputs.cvss:                      ${STEPS__DEPENDABOT_METADATA__OUTPUTS__CVSS}"
+          echo "steps.dependabot-metadata.outputs.compatibility-score:       ${STEPS__DEPENDABOT_METADATA__OUTPUTS__COMPATIBILITY_SCORE}"
+        env:
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__DEPENDENCY_NAMES: "${{ steps.dependabot-metadata.outputs.dependency-names }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__DEPENDENCY_TYPE: "${{ steps.dependabot-metadata.outputs.dependency-type }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__UPDATE_TYPE: "${{ steps.dependabot-metadata.outputs.update-type }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__UPDATED_DEPENDENCIES_JSON: "${{ steps.dependabot-metadata.outputs.updated-dependencies-json }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__DIRECTORY: "${{ steps.dependabot-metadata.outputs.directory }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__PACKAGE_ECOSYSTEM: "${{ steps.dependabot-metadata.outputs.package-ecosystem }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__TARGET_BRANCH: "${{ steps.dependabot-metadata.outputs.target-branch }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__PREVIOUS_VERSION: "${{ steps.dependabot-metadata.outputs.previous-version }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__NEW_VERSION: "${{ steps.dependabot-metadata.outputs.new-version }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__ALERT_STATE: "${{ steps.dependabot-metadata.outputs.alert-state }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__GHSA_ID: "${{ steps.dependabot-metadata.outputs.ghsa-id }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__CVSS: "${{ steps.dependabot-metadata.outputs.cvss }}"
+          STEPS__DEPENDABOT_METADATA__OUTPUTS__COMPATIBILITY_SCORE: "${{ steps.dependabot-metadata.outputs.compatibility-score }}"
+
+      # Checkout repo; this is required so that we can checkout the PR URL below for approval.
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      # Approve the PR if it has not already been approved.
+      - name: Approve a PR if not already approved
+        run: |
+          gh pr checkout "$PR_URL" # sets the upstream metadata for `gh pr status`
+          if [ "$(gh pr status --json reviewDecision -q .currentBranch.reviewDecision)" != "APPROVED" ];
+          then gh pr review --approve "$PR_URL"
+          else echo "PR already approved, skipping additional approvals to minimize emails/notification noise.";
+          fi
+        env:
+          PR_URL: "${{ github.event.pull_request.html_url }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      # Finally, this sets the PR to allow auto-merging for patch and minor
+      # updates if all checks pass
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: "${{ github.event.pull_request.html_url }}"
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
