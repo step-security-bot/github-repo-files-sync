@@ -70,3 +70,27 @@ group:
     repos: |
       ChrisCarini/example-loc-plugin-config-plugin
       ChrisCarini/loc-change-count-detector-jetbrains-plugin
+
+  ##########################################
+  #   JetBrains Plugin - Build & Release   #
+  ##########################################
+  - files:
+      # JetBrains Plugin - Build + Release Draft
+      - source: .github/workflows/jetbrains-build.yml
+        dest: .github/workflows/build.yml
+      # JetBrains Plugin - Release
+      - source: .github/workflows/jetbrains-release.yml
+        dest: .github/workflows/release.yml
+    repos: |
+      ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
+      ChrisCarini/environment-variable-settings-summary-intellij-plugin
+      ChrisCarini/example-loc-plugin-config-plugin
+      ChrisCarini/git-push-reminder-jetbrains-plugin
+      ChrisCarini/intellij-code-exfiltration      
+      ChrisCarini/intellij-notification-sample
+      ChrisCarini/iris-jetbrains-plugin
+      ChrisCarini/jetbrains-auto-power-saver
+      ChrisCarini/jetbrains-sdk-cleaner
+      ChrisCarini/loc-change-count-detector-jetbrains-plugin
+      ChrisCarini/logshipper-intellij-plugin
+      ChrisCarini/sample-intellij-plugin
