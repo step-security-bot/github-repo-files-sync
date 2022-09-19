@@ -33,7 +33,7 @@ jobs:
           PR_LABELS: |
             repo-file-sync
           CONFIG_PATH: sync.yml
-          GH_PAT: ${{ secrets.GH_PAT_REPO_SCOPE }}
+          GH_PAT: ${{ secrets.GH_PAT_REPO_WORKFLOW_SCOPE }}
 
   ##############################
   #     SYNC REPO SETTINGS     #
