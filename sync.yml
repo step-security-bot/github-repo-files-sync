@@ -1,4 +1,7 @@
 group:
+  ##################
+  #   Dependabot   #
+  ##################
   # dependabot config - Gradle + GitHub Actions
   - files:
       - source: dependabot/dependabot-gradle-and-github-actions.yml
@@ -42,3 +45,22 @@ group:
       ChrisCarini/upptime
       ChrisCarini/github-repo-files-sync
 
+  #############################
+  #   Update Gradle Wrapper   #
+  #############################
+  - files:
+      - source: .github/workflows/update-gradle-wrapper.yml
+        dest: .github/workflows/update-gradle-wrapper.yml
+    repos: |
+      ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
+      ChrisCarini/environment-variable-settings-summary-intellij-plugin
+      ChrisCarini/example-loc-plugin-config-plugin
+      ChrisCarini/git-push-reminder-jetbrains-plugin
+      ChrisCarini/intellij-code-exfiltration      
+      ChrisCarini/intellij-notification-sample
+      ChrisCarini/iris-jetbrains-plugin
+      ChrisCarini/jetbrains-auto-power-saver
+      ChrisCarini/jetbrains-sdk-cleaner
+      ChrisCarini/loc-change-count-detector-jetbrains-plugin
+      ChrisCarini/logshipper-intellij-plugin
+      ChrisCarini/sample-intellij-plugin    
