@@ -48,19 +48,25 @@ group:
   #############################
   #   Update Gradle Wrapper   #
   #############################
+  # Update Gradle Wrapper - common
   - files:
       - source: .github/workflows/update-gradle-wrapper.yml
         dest: .github/workflows/update-gradle-wrapper.yml
     repos: |
       ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
       ChrisCarini/environment-variable-settings-summary-intellij-plugin
-      ChrisCarini/example-loc-plugin-config-plugin
       ChrisCarini/git-push-reminder-jetbrains-plugin
       ChrisCarini/intellij-code-exfiltration      
       ChrisCarini/intellij-notification-sample
       ChrisCarini/iris-jetbrains-plugin
       ChrisCarini/jetbrains-auto-power-saver
       ChrisCarini/jetbrains-sdk-cleaner
-      ChrisCarini/loc-change-count-detector-jetbrains-plugin
       ChrisCarini/logshipper-intellij-plugin
-      ChrisCarini/sample-intellij-plugin    
+      ChrisCarini/sample-intellij-plugin
+  # Update Gradle Wrapper (+ reviewer `bansalsulabh`)
+  - files:
+      - source: .github/workflows/update-gradle-wrapper-bansalsulabh.yml
+        dest: .github/workflows/update-gradle-wrapper.yml
+    repos: |
+      ChrisCarini/example-loc-plugin-config-plugin
+      ChrisCarini/loc-change-count-detector-jetbrains-plugin
