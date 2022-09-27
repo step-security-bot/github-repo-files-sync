@@ -78,6 +78,9 @@ group:
       # JetBrains Plugin - Build + Release Draft
       - source: .github/workflows/jetbrains-build.yml
         dest: .github/workflows/build.yml
+      # JetBrains Plugin - Compatibility
+      - source: .github/workflows/jetbrains-compatibility.yml
+        dest: .github/workflows/compatibility.yml
       # JetBrains Plugin - Release
       - source: .github/workflows/jetbrains-release.yml
         dest: .github/workflows/release.yml
