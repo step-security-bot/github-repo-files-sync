@@ -19,7 +19,9 @@ jobs:
 
       - name: Run Repo File Sync Action
         id: repo-file-sync
-        uses: BetaHuhn/repo-file-sync-action@v1
+#        Use my own fork for now, as I want to try out a few new features I'm adding...
+#        uses: BetaHuhn/repo-file-sync-action@v1
+        uses: ChrisCarini/repo-file-sync-action@main
         with:
           ASSIGNEES: |
             ChrisCarini
