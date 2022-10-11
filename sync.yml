@@ -49,7 +49,7 @@ group:
   #############################
   # Update Gradle Wrapper - common
   - files:
-      - source: .github/workflows/update-gradle-wrapper.yml
+      - source: github/workflows/update-gradle-wrapper.yml
         dest: .github/workflows/update-gradle-wrapper.yml
     repos: |
       ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
@@ -64,7 +64,7 @@ group:
       ChrisCarini/sample-intellij-plugin
   # Update Gradle Wrapper (+ reviewer `bansalsulabh`)
   - files:
-      - source: .github/workflows/update-gradle-wrapper-bansalsulabh.yml
+      - source: github/workflows/update-gradle-wrapper-bansalsulabh.yml
         dest: .github/workflows/update-gradle-wrapper.yml
     repos: |
       ChrisCarini/example-loc-plugin-config-plugin
@@ -75,13 +75,13 @@ group:
   ##########################################
   - files:
       # JetBrains Plugin - Build + Release Draft
-      - source: .github/workflows/jetbrains-build.yml
+      - source: github/workflows/jetbrains-build.yml
         dest: .github/workflows/build.yml
       # JetBrains Plugin - Compatibility
-      - source: .github/workflows/jetbrains-compatibility.yml
+      - source: github/workflows/jetbrains-compatibility.yml
         dest: .github/workflows/compatibility.yml
       # JetBrains Plugin - Release
-      - source: .github/workflows/jetbrains-release.yml
+      - source: github/workflows/jetbrains-release.yml
         dest: .github/workflows/release.yml
       # JetBrains Plugin - Standard JetBrains build.gradle
       - source: gradle/standard_jetbrains_plugin/build.gradle

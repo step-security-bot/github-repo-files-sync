@@ -13,7 +13,17 @@ updates:
     reviewers:
       - ChrisCarini
 
-  # Maintain dependencies for GitHub Actions
+  # Maintain dependencies for GitHub Actions (for **other** repos' workflow files)
+  - package-ecosystem: "github-actions"
+    directory: "/github/workflows/"
+    schedule:
+      interval: "daily"
+    labels:
+      - "merge when passing"  # This is a label that [Repo Ranger](https://github.com/apps/repo-ranger) will pickup and auto-merge when all GH checks pass.
+    reviewers:
+      - ChrisCarini
+
+  # Maintain dependencies for GitHub Actions (for **this** repo's workflow files)
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
