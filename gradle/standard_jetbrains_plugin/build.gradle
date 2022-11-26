@@ -131,18 +131,24 @@ tasks {
     task generateIdeVersionsList {
         dependsOn('listProductsReleases')
         doLast {
-            def outFileWriter = new File(buildDir, 'intellij-platform-plugin-verifier-action-ide-versions-file.txt').newPrintWriter()
+            def ideVersionsList = [];
 
             // Include the versions produced from the `listProductsReleases` task.
             listProductsReleases.getOutputFile().get().asFile.eachLine { line ->
-                outFileWriter.println("idea" + line.replaceAll("-", ":"))
+                ideVersionsList.add("idea" + line.replaceAll("-", ":"))
             }
 
             // Include the versions specified in `gradle.properties` `pluginVerifierIdeVersions` property.
             properties("pluginVerifierIdeVersions").split(',')*.trim().each { version ->
                 ['IC', 'IU'].each { type ->
-                    outFileWriter.println("idea" + type + ":" + version)
+                    ideVersionsList.add("idea" + type + ":" + version)
                 }
+            }
+
+            // Write out file with unique pairs of type + version
+            def outFileWriter = new File(buildDir, 'intellij-platform-plugin-verifier-action-ide-versions-file.txt').newPrintWriter()
+            ideVersionsList.unique().each { version ->
+                outFileWriter.println(version)
             }
             outFileWriter.close()
         }
