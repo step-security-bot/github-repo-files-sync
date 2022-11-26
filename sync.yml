@@ -6,7 +6,10 @@ group:
   - files:
       - source: dependabot/dependabot-gradle-and-github-actions.yml
         dest: .github/dependabot.yml
+    # Place `ChrisCarini/sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
     repos: |
+      ChrisCarini/sample-intellij-plugin
+      
       ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
       ChrisCarini/environment-variable-settings-summary-intellij-plugin
       ChrisCarini/git-push-reminder-jetbrains-plugin
@@ -16,7 +19,6 @@ group:
       ChrisCarini/jetbrains-auto-power-saver
       ChrisCarini/jetbrains-sdk-cleaner
       ChrisCarini/logshipper-intellij-plugin
-      ChrisCarini/sample-intellij-plugin
 
   # dependabot config - Gradle + GitHub Actions (+ reviewer `bansalsulabh`)
   - files:
@@ -51,7 +53,10 @@ group:
   - files:
       - source: github/workflows/update-gradle-wrapper.yml
         dest: .github/workflows/update-gradle-wrapper.yml
+    # Place `ChrisCarini/sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
     repos: |
+      ChrisCarini/sample-intellij-plugin
+      
       ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
       ChrisCarini/environment-variable-settings-summary-intellij-plugin
       ChrisCarini/git-push-reminder-jetbrains-plugin
@@ -61,7 +66,6 @@ group:
       ChrisCarini/jetbrains-auto-power-saver
       ChrisCarini/jetbrains-sdk-cleaner
       ChrisCarini/logshipper-intellij-plugin
-      ChrisCarini/sample-intellij-plugin
   # Update Gradle Wrapper (+ reviewer `bansalsulabh`)
   - files:
       - source: github/workflows/update-gradle-wrapper-bansalsulabh.yml
@@ -86,7 +90,10 @@ group:
       # JetBrains Plugin - Standard JetBrains build.gradle
       - source: gradle/standard_jetbrains_plugin/build.gradle
         dest: build_standard_jetbrains_plugin_build.gradle
+    # Place `ChrisCarini/sample-intellij-plugin` first as it is a test repo and typically we want to look at this PR first.
     repos: |
+      ChrisCarini/sample-intellij-plugin
+      
       ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
       ChrisCarini/environment-variable-settings-summary-intellij-plugin
       ChrisCarini/example-loc-plugin-config-plugin
@@ -98,4 +105,3 @@ group:
       ChrisCarini/jetbrains-sdk-cleaner
       ChrisCarini/loc-change-count-detector-jetbrains-plugin
       ChrisCarini/logshipper-intellij-plugin
-      ChrisCarini/sample-intellij-plugin
