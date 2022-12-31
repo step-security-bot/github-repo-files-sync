@@ -14,14 +14,19 @@ jobs:
   sync_repo_files:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Checkout Repository
-        uses: actions/checkout@v3.2.0
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
 
       - name: Run Repo File Sync Action
         id: repo-file-sync
 #        Use my own fork for now, as I want to try out a few new features I'm adding...
 #        uses: BetaHuhn/repo-file-sync-action@v1
-        uses: ChrisCarini/repo-file-sync-action@main
+        uses: ChrisCarini/repo-file-sync-action@17a1d07fae64df59e51fd31c7f745a7ab9a75633 # main
         with:
           ASSIGNEES: |
             ChrisCarini
@@ -52,8 +57,13 @@ jobs:
   sync_repo_settings:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - name: Sync Repo Settings - public
-        uses: kbrashears5/github-action-repo-settings-sync@2.0
+        uses: kbrashears5/github-action-repo-settings-sync@4e07e64f17de011ddf55a4a827428728cb7fcf87 # 2.0
         with:
           REPOSITORIES: |
             ChrisCarini/automatic-github-issue-navigation-configuration-jetbrains-plugin
@@ -96,7 +106,7 @@ jobs:
           TOKEN: ${{ secrets.GH_PAT_REPO_SCOPE }}
 
       - name: Sync Repo Settings - private
-        uses: kbrashears5/github-action-repo-settings-sync@2.0
+        uses: kbrashears5/github-action-repo-settings-sync@4e07e64f17de011ddf55a4a827428728cb7fcf87 # 2.0
         with:
           REPOSITORIES: |
             ChrisCarini/fitbit-data-extract
